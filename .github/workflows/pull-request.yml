@@ -32,8 +32,24 @@ jobs:
             echo "No unit tests found. Skipping..."
           fi
 
+      - name: Verify if linter configuration exists
+        id: check-linter
+        run: |
+          if [ -f ".eslintrc.js" ] || [ -f ".eslintrc.json" ] || [ -f ".eslintrc.yml" ] || [ -f ".eslintrc.yaml" ] || [ -f ".eslintrc" ]; then
+            echo "::set-output name=linter-config::true"
+            echo "Configuration exists"
+          else
+            echo "::set-output name=linter-config::false"
+            echo "No configuration exists"
+          fi
+
       - name: Lint code with ESLint
-        run: npx eslint .
+        run: |
+          if [ "${{ steps.check-linter.outputs.linter-config }}" == "true" ]; then
+            npx eslint .
+          else
+            echo "No linter configuration found. Skipping..."
+          fi
 
   deploy:
     needs: build
