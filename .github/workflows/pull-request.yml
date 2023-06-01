@@ -74,7 +74,7 @@ jobs:
       - name: Request review
         uses: reviewdog/action-approve@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PULL_TOKEN }}
           comment: "This pull request has been approved."
 
   notifications:
