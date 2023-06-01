@@ -18,11 +18,18 @@ jobs:
         with:
           node-version: 14
 
+      - name: cd site/
+        run: cd site/
+
       - name: Install dependencies
         run: npm install
 
       - name: Run unit tests
-        run: npm test
+        run: if [ -n "$(find . -name '*test.js')" ]; then
+          npm test
+          else
+          echo "No unit tests found. Skipping..."
+          fi
 
       - name: Lint code with ESLint
         run: npx eslint .
