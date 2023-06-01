@@ -25,10 +25,11 @@ jobs:
         run: npm install
 
       - name: Run unit tests
-        run: if [ -n "$(find . -name '*test.js')" ]; then
-          npm test
+        run: |
+          if [ -n "$(find . -name '*test.js')" ]; then
+            npm test
           else
-          echo "No unit tests found. Skipping..."
+            echo "No unit tests found. Skipping..."
           fi
 
       - name: Lint code with ESLint
